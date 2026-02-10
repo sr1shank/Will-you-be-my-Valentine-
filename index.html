@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Be My Valentine?</title>
-
   <style>
+    /* Background & font */
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
     body {
-      font-family: "Comic Sans MS", cursive, sans-serif;
-      background: linear-gradient(135deg, #ffd6e8, #ffeef5);
+      font-family: 'Pacifico', cursive;
+      margin: 0;
       height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffcee6, #ffe6f2);
       overflow: hidden;
     }
 
-    a {
-      font-size: 1.5rem;
-      color: #ff4d88;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-
+    /* Card */
     .card {
       display: none;
-      background: white;
-      padding: 25px 30px 40px;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      background: #fff0f5;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
       text-align: center;
+      padding: 30px 25px;
+      width: 350px;
       position: relative;
-      width: 320px;
-    }
-
-    img {
-      width: 220px;
-      border-radius: 15px;
-      margin-bottom: 15px;
     }
 
     h2 {
+      color: #ff4d88;
       margin-bottom: 20px;
+    }
+
+    img {
+      width: 250px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
 
     .buttons {
       display: flex;
-      gap: 15px;
       justify-content: center;
+      gap: 15px;
       margin-top: 10px;
     }
 
     button {
-      padding: 10px 18px;
-      border: none;
-      border-radius: 25px;
+      padding: 12px 20px;
+      border-radius: 30px;
       font-size: 1rem;
+      border: none;
       cursor: pointer;
       background: #ff77aa;
-      color: white;
+      color: #fff;
+      transition: transform 0.2s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
     button:hover {
@@ -66,41 +66,57 @@
 
     .no {
       position: absolute;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       background: #ddd;
       color: #555;
-      padding: 6px 10px;
+      padding: 6px 12px;
       border-radius: 20px;
       cursor: pointer;
     }
 
-    /* 💖 Heart explosion */
-    .heart {
+    /* Hearts & confetti */
+    .heart, .confetti {
       position: absolute;
-      font-size: 20px;
-      animation: floatUp 1.5s ease-out forwards;
       pointer-events: none;
     }
 
+    .heart {
+      font-size: 24px;
+      animation: floatUp 1.5s ease-out forwards;
+    }
+
     @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(var(--x), -120px) scale(1.8);
-      }
+      0% { opacity: 1; transform: translate(0,0) scale(1); }
+      100% { opacity: 0; transform: translate(var(--x), -140px) scale(2); }
+    }
+
+    .confetti {
+      width: 8px;
+      height: 8px;
+      background: #ff77aa;
+      opacity: 0.9;
+      border-radius: 50%;
+      animation: confettiFall 2s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translate(0,0) rotate(0deg); opacity:1; }
+      100% { transform: translate(var(--x), 400px) rotate(720deg); opacity:0; }
+    }
+
+    a {
+      font-size: 1.5rem;
+      color: #ff4d88;
+      cursor: pointer;
+      text-decoration: underline;
     }
   </style>
 </head>
-
 <body>
-
   <a onclick="openCard()">Click me 💌</a>
 
   <div class="card" id="card">
-    <img src="https://placekitten.com/300/300" alt="Cute kitten" />
+    <img src="https://images.unsplash.com/photo-1613145995305-05e4f57c4e99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8Y3V0ZSBraXR0ZW58fHx8fHwxNjc1Mjg0NTk0&ixlib=rb-4.0.3&q=80&w=400" alt="Cute kitten">
     <h2>Will you be my Valentine? 💕</h2>
 
     <div class="buttons">
@@ -112,54 +128,56 @@
   </div>
 
   <script>
+    const card = document.getElementById('card');
+    const noBtn = document.getElementById('no');
+
     function openCard() {
-      document.querySelector("a").style.display = "none";
-      document.getElementById("card").style.display = "block";
+      document.querySelector('a').style.display = 'none';
+      card.style.display = 'block';
       moveNo();
     }
 
     function yes(e) {
       explodeHearts(e.clientX, e.clientY);
-      setTimeout(() => {
-        alert("YAY!!! 💖🥰 Best Valentine ever!");
-      }, 600);
+      explodeConfetti();
     }
 
     function explodeHearts(x, y) {
-      for (let i = 0; i < 15; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.textContent = "💖";
-
-        const offsetX = (Math.random() - 0.5) * 120;
-        heart.style.setProperty("--x", offsetX + "px");
-
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
-
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '💖';
+        const offsetX = (Math.random()-0.5)*150;
+        heart.style.setProperty('--x', offsetX + 'px');
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
         document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 1500);
+        setTimeout(()=>heart.remove(),1500);
       }
     }
 
-    // sneaky no button
-    const noBtn = document.getElementById("no");
-
-    function moveNo() {
-      const card = document.getElementById("card");
-      const maxX = card.offsetWidth - noBtn.offsetWidth;
-      const maxY = card.offsetHeight - noBtn.offsetHeight;
-
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+    function explodeConfetti() {
+      for (let i=0; i<30; i++){
+        const confetti = document.createElement('div');
+        confetti.className='confetti';
+        confetti.style.left = Math.random()*window.innerWidth + 'px';
+        confetti.style.setProperty('--x', (Math.random()-0.5)*200 + 'px');
+        confetti.style.background = `hsl(${Math.random()*360}, 80%, 70%)`;
+        document.body.appendChild(confetti);
+        setTimeout(()=>confetti.remove(),2000);
+      }
     }
 
-    noBtn.addEventListener("mouseenter", moveNo);
-  </script>
+    function moveNo() {
+      const maxX = card.offsetWidth - noBtn.offsetWidth;
+      const maxY = card.offsetHeight - noBtn.offsetHeight;
+      const x = Math.random()*maxX;
+      const y = Math.random()*maxY;
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
 
+    noBtn.addEventListener('mouseenter', moveNo);
+  </script>
 </body>
 </html>

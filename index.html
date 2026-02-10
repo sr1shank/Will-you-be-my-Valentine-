@@ -1,206 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Will you be my Valentine?</title>
-  <style>
-    /* Body & background */
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: sans-serif;
-      background: radial-gradient(circle at top left, #ffe6f0, #fff5f9);
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<title>Will you be my Valentine?</title>
 
-    /* Cute floating shapes in the background */
-    .shape {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: rgba(255, 150, 180, 0.2);
-      animation: floatShapes 12s linear infinite;
-    }
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 
-    @keyframes floatShapes {
-      0% {transform: translateY(0) rotate(0deg);}
-      50% {transform: translateY(-500px) rotate(180deg);}
-      100% {transform: translateY(0) rotate(360deg);}
-    }
+<style>
+  /* Body & background */
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif; /* Base font for body */
+    background: radial-gradient(circle at top left, #ffe6f0, #fff5f9);
+    overflow: hidden;
+  }
 
-    /* Card */
-    .card {
-      display: none;
-      background: #fff0f5;
-      border-radius: 25px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-      text-align: center;
-      padding: 40px 35px;
-      width: 450px;
-      position: relative;
-    }
+  /* Faint hearts floating in the background */
+  .heart-shape {
+    position: absolute;
+    font-size: 30px;
+    color: rgba(255, 100, 160, 0.15);
+    animation: floatHeart linear infinite;
+  }
 
-    h2 {
-      color: #ff4d88;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
-    }
+  @keyframes floatHeart {
+    0% {transform: translateY(0) rotate(0deg);}
+    100% {transform: translateY(-600px) rotate(360deg);}
+  }
 
-    img {
-      width: 300px;
-      border-radius: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
+  /* Swirly corner tinsel */
+  .tinsel {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid;
+    border-color: hsl(0, 80%, 70%);
+    animation: spinColors 6s linear infinite, rotateSpin 12s linear infinite;
+  }
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 10px;
-    }
+  @keyframes spinColors {
+    0% {border-color: hsl(0, 80%, 70%);}
+    25% {border-color: hsl(60, 80%, 70%);}
+    50% {border-color: hsl(120, 80%, 70%);}
+    75% {border-color: hsl(240, 80%, 70%);}
+    100% {border-color: hsl(360, 80%, 70%);}
+  }
 
-    button {
-      padding: 14px 22px;
-      border-radius: 35px;
-      font-size: 1.1rem;
-      border: none;
-      cursor: pointer;
-      background: #ff77aa;
-      color: #fff;
-      transition: transform 0.2s;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    }
+  @keyframes rotateSpin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+  }
 
-    button:hover {
-      transform: scale(1.05);
-    }
+  .top-left { top: -50px; left: -50px; }
+  .top-right { top: -50px; right: -50px; }
+  .bottom-left { bottom: -50px; left: -50px; }
+  .bottom-right { bottom: -50px; right: -50px; }
 
-    .no {
-      position: absolute;
-      font-size: 0.95rem;
-      background: #ddd;
-      color: #555;
-      padding: 7px 14px;
-      border-radius: 25px;
-      cursor: pointer;
-    }
+  /* Card */
+  .card {
+    display: none;
+    background: #fff0f5;
+    border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 40px 35px;
+    width: 450px;
+    position: relative;
+    z-index: 10;
+  }
 
-    /* Hearts & confetti */
-    .heart, .confetti {
-      position: absolute;
-      pointer-events: none;
-    }
+  /* Cool font for question and buttons */
+  h2, button {
+    font-family: 'Poppins', sans-serif;
+  }
 
-    .heart {
-      font-size: 26px;
-      animation: floatUp 1.5s ease-out forwards;
-    }
+  h2 {
+    color: #ff4d88;
+    margin-bottom: 25px;
+    font-size: 2rem;
+  }
 
-    @keyframes floatUp {
-      0% { opacity: 1; transform: translate(0,0) scale(1); }
-      100% { opacity: 0; transform: translate(var(--x), -160px) scale(2); }
-    }
+  img {
+    width: 300px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
 
-    .confetti {
-      width: 8px;
-      height: 8px;
-      background: #ff77aa;
-      opacity: 0.9;
-      border-radius: 50%;
-      animation: confettiFall 2s linear forwards;
-    }
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
 
-    @keyframes confettiFall {
-      0% { transform: translate(0,0) rotate(0deg); opacity:1; }
-      100% { transform: translate(var(--x), 450px) rotate(720deg); opacity:0; }
-    }
+  button {
+    padding: 14px 22px;
+    border-radius: 35px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    background: #ff77aa;
+    color: #fff;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
 
-    a {
-      font-size: 1.6rem;
-      color: #ff4d88;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  </style>
+  button:hover { 
+    transform: scale(1.05); 
+    background: #ff5599;
+  }
+
+  .no {
+    position: absolute;
+    font-size: 0.95rem;
+    background: #ddd;
+    color: #555;
+    padding: 7px 14px;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+
+  /* Hearts & confetti on click */
+  .heart, .confetti {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .heart {
+    font-size: 26px;
+    animation: floatUp 1.5s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--x), -160px) scale(2); }
+  }
+
+  .confetti {
+    width: 8px;
+    height: 8px;
+    background: #ff77aa;
+    opacity: 0.9;
+    border-radius: 50%;
+    animation: confettiFall 2s linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translate(0,0) rotate(0deg); opacity:1; }
+    100% { transform: translate(var(--x), 450px) rotate(720deg); opacity:0; }
+  }
+
+  a {
+    font-size: 1.6rem;
+    color: #ff4d88;
+    cursor: pointer;
+    text-decoration: underline;
+    z-index: 10;
+    position: relative;
+  }
+
+</style>
 </head>
 <body>
-  <!-- floating background shapes -->
-  <div class="shape" style="left:10%; animation-duration:14s;"></div>
-  <div class="shape" style="left:70%; animation-duration:18s;"></div>
-  <div class="shape" style="left:40%; animation-duration:16s;"></div>
-  <div class="shape" style="left:85%; animation-duration:20s;"></div>
+
+  <!-- Tinsel in corners -->
+  <div class="tinsel top-left"></div>
+  <div class="tinsel top-right"></div>
+  <div class="tinsel bottom-left"></div>
+  <div class="tinsel bottom-right"></div>
+
+  <!-- Floating hearts -->
+  <div class="heart-shape" style="left:10%; animation-duration:12s;">❤️</div>
+  <div class="heart-shape" style="left:30%; animation-duration:15s;">💖</div>
+  <div class="heart-shape" style="left:50%; animation-duration:18s;">💗</div>
+  <div class="heart-shape" style="left:70%; animation-duration:14s;">💝</div>
+  <div class="heart-shape" style="left:85%; animation-duration:20s;">💓</div>
 
   <a onclick="openCard()">Click me 💌</a>
 
   <div class="card" id="card">
     <img src="kitten.jpg" alt="Cute kitten">
     <h2>Will you be my Valentine? 💕</h2>
-
     <div class="buttons">
       <button onclick="yes(event)">Yes</button>
       <button onclick="yes(event)">Yes</button>
     </div>
-
     <div class="no" id="no">no</div>
   </div>
 
-  <script>
-    const card = document.getElementById('card');
-    const noBtn = document.getElementById('no');
+<script>
+const card = document.getElementById('card');
+const noBtn = document.getElementById('no');
 
-    function openCard() {
-      document.querySelector('a').style.display = 'none';
-      card.style.display = 'block';
-      moveNo();
-    }
+function openCard() {
+  document.querySelector('a').style.display = 'none';
+  card.style.display = 'block';
+  moveNo();
+}
 
-    function yes(e) {
-      explodeHearts(e.clientX, e.clientY);
-      explodeConfetti();
-    }
+function yes(e) {
+  explodeHearts(e.clientX, e.clientY);
+  explodeConfetti();
+}
 
-    function explodeHearts(x, y) {
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.textContent = '💖';
-        const offsetX = (Math.random()-0.5)*150;
-        heart.style.setProperty('--x', offsetX + 'px');
-        heart.style.left = x + 'px';
-        heart.style.top = y + 'px';
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),1500);
-      }
-    }
+function explodeHearts(x, y) {
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '💖';
+    const offsetX = (Math.random()-0.5)*150;
+    heart.style.setProperty('--x', offsetX + 'px');
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),1500);
+  }
+}
 
-    function explodeConfetti() {
-      for (let i=0; i<30; i++){
-        const confetti = document.createElement('div');
-        confetti.className='confetti';
-        confetti.style.left = Math.random()*window.innerWidth + 'px';
-        confetti.style.setProperty('--x', (Math.random()-0.5)*200 + 'px');
-        confetti.style.background = `hsl(${Math.random()*360}, 80%, 70%)`;
-        document.body.appendChild(confetti);
-        setTimeout(()=>confetti.remove(),2000);
-      }
-    }
+function explodeConfetti() {
+  for (let i=0; i<30; i++){
+    const confetti = document.createElement('div');
+    confetti.className='confetti';
+    confetti.style.left = Math.random()*window.innerWidth + 'px';
+    confetti.style.setProperty('--x', (Math.random()-0.5)*200 + 'px');
+    confetti.style.background = `hsl(${Math.random()*360}, 80%, 70%)`;
+    document.body.appendChild(confetti);
+    setTimeout(()=>confetti.remove(),2000);
+  }
+}
 
-    function moveNo() {
-      const maxX = card.offsetWidth - noBtn.offsetWidth;
-      const maxY = card.offsetHeight - noBtn.offsetHeight;
-      const x = Math.random()*maxX;
-      const y = Math.random()*maxY;
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
-    }
+function moveNo() {
+  const maxX = card.offsetWidth - noBtn.offsetWidth;
+  const maxY = card.offsetHeight - noBtn.offsetHeight;
+  const x = Math.random()*maxX;
+  const y = Math.random()*maxY;
+  noBtn.style.left = x + 'px';
+  noBtn.style.top = y + 'px';
+}
 
-    noBtn.addEventListener('mouseenter', moveNo);
-  </script>
+noBtn.addEventListener('mouseenter', moveNo);
+</script>
 </body>
 </html>

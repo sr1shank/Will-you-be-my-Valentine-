@@ -89,8 +89,18 @@
   img {
     width: 300px;
     border-radius: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 10px; /* slightly less to make room for caption */
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Caption under image */
+  .caption {
+    font-family: 'Poppins', sans-serif;
+    color: #ff2d70; /* red color */
+    font-size: 1rem;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: center;
   }
 
   .buttons {
@@ -186,6 +196,7 @@
 
   <div class="card" id="card">
     <img src="IMG_6694.jpeg" alt="(This is you btw)">
+    <p class="caption">(this is you btw)</p>
     <h2>Will you be my Valentine? 💕</h2>
     <div class="buttons">
       <button onclick="yes(event)">Yes</button>
